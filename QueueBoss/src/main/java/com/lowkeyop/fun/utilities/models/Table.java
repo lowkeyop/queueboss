@@ -1,4 +1,4 @@
-package com.fun.queueboss.models;
+package com.lowkeyop.fun.utilities.models;
 
 import java.util.UUID;
 
