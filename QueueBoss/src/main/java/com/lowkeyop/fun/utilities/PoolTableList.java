@@ -148,7 +148,7 @@ public class PoolTableList implements List {
 			}
 		}
 		playerListSize = this.playerList.size();
-		System.out.println("After list purge, there's " + playerListSize + " people left on the list");
+		System.out.println("After list purge, there's " + (playerListSize==0? "no one" : playerListSize  + " people" ) +  " left on the list");
 	}
 
 	public void viewPlayerList() {
@@ -158,7 +158,18 @@ public class PoolTableList implements List {
 			System.out.println(this.playerList.get(i).getFullName() + " Position => " + (i == 1 ? "NEXT" : i));
 		}
 	}
+	public void showTableStatus(Table t) {
+		System.out.println("Is this table open? : " + t.isOpenTable());
+		System.out.println("Is this table free? : " + t.isFreeTable());
+		System.out.println("Player 1: " + t.getPlayer1().getFullName());
+		System.out.println("Player 2: " + t.getPlayer2().getFullName() + "\n");
+	}
 
+	public void showAllTableStatuses() {
+		for( int i=1; i <= this.getTableAmount(); i++) {
+			this.showTableStatus(this.getTableList().get(i));
+		}
+	}
 	public void holdPlayerPosition(Player p, int position) {
 		// TODO Auto-generated method stub
 
@@ -198,8 +209,8 @@ public class PoolTableList implements List {
 		ptl.addTable(table1);
 		ptl.addTable(table2);
 		ptl.addTable(table3);
-		ptl.addTable(table4);
-		ptl.addTable(table5);
+//		ptl.addTable(table4);
+//		ptl.addTable(table5);
 
 		System.out.println("Amount of tables: " + ptl.getTableList().size());
 		System.out.println("Amount of player: " + ptl.getPlayerList().size());
@@ -212,7 +223,8 @@ public class PoolTableList implements List {
 		ptl.viewPlayerList();
 		ptl.sendMaxPlayersToTable();
 		ptl.viewPlayerList();
-
+		System.out.println();
+		ptl.showAllTableStatuses();
 	}
 
 }
