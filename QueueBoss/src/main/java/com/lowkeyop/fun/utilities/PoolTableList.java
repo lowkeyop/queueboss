@@ -14,9 +14,9 @@ import com.lowkeyop.fun.utilities.models.Table;
 
 public class PoolTableList implements List {
 
-	private int currentPosition, tableAmount, unAvailableTables;
+	private int currentPosition, tableAmount, unavailableTableCount;
 	private HashMap<Integer, Player> playerList;
-	private HashMap<Integer, Table> tableList;
+	private HashMap<Integer, Table> tableList, unavailableTables;
 
 	public PoolTableList(HashMap<Integer, Player> playerList, HashMap<Integer, Table> tList) {
 		super();
@@ -24,6 +24,7 @@ public class PoolTableList implements List {
 		this.tableList = tList;
 		this.currentPosition = 0;
 		this.setTableAmount(0);
+		this.unavailableTableCount = 0;
 	}
 
 	public PoolTableList() {
@@ -48,14 +49,15 @@ public class PoolTableList implements List {
 	}
 
 	public int getAvailableTableCount() {
-		return tableAmount - unAvailableTables;
-	}
-	public int getUnAvailableTables() {
-		return unAvailableTables;
+		return tableAmount - unavailableTableCount;
 	}
 
-	public void setUnAvailableTables(int unAvailableTables) {
-		this.unAvailableTables = unAvailableTables;
+	public int getUnavailableTableCount() {
+		return unavailableTableCount;
+	}
+
+	public void setUnavailableTableCount(int unAvailableTables) {
+		this.unavailableTableCount = unAvailableTables;
 	}
 
 	public HashMap<Integer, Player> getPlayerList() {
@@ -72,6 +74,14 @@ public class PoolTableList implements List {
 
 	public void setTableList(HashMap<Integer, Table> tableList) {
 		this.tableList = tableList;
+	}
+
+	public HashMap<Integer, Table> getUnavailableTables() {
+		return unavailableTables;
+	}
+
+	public void setUnavailableTables(HashMap<Integer, Table> unavailableTables) {
+		this.unavailableTables = unavailableTables;
 	}
 
 	public void addPlayerToList(Player p) {
@@ -111,7 +121,7 @@ public class PoolTableList implements List {
 	public void sendNextPlayerToMatch() {
 		Player playerUpNext = this.getPlayerList().get(1);
 		Set<Integer> tableNumbers = this.getTableList().keySet();
-
+		
 		for (Iterator<Integer> iterator = tableNumbers.iterator(); iterator.hasNext();) {
 			Integer tableNum = (Integer) iterator.next();
 			Table tableToCheck = this.getTableList().get(tableNum);
@@ -131,9 +141,6 @@ public class PoolTableList implements List {
 				break;
 			} else {
 				sendPlayerToTable(playerUpNext, tableNum);
-				if (!tableToCheck.isOpenTable()) {
-					this.unAvailableTables++;
-				}
 			}
 		}
 	}
@@ -148,7 +155,18 @@ public class PoolTableList implements List {
 			}
 		}
 		playerListSize = this.playerList.size();
-		System.out.println("After list purge, there's " + (playerListSize==0? "no one" : playerListSize  + " people" ) +  " left on the list");
+		System.out.println("After list purge, there's " + (playerListSize == 0 ? "no one" : playerListSize + " people")
+				+ " left on the list");
+	}
+
+	public void updateUnAvailableTableList() {
+		for(int i=1; i < this.getTableAmount(); i++) {
+			Table tableChecking = this.getTableList().get(i);
+			if(!tableChecking.isOpenTable()) {
+				this.getUnavailableTables().put(i, tableChecking);
+			}
+		}
+		this.setUnavailableTableCount(this.getUnavailableTables().size());//updating unavialableTableCount
 	}
 
 	public void viewPlayerList() {
@@ -158,6 +176,7 @@ public class PoolTableList implements List {
 			System.out.println(this.playerList.get(i).getFullName() + " Position => " + (i == 1 ? "NEXT" : i));
 		}
 	}
+
 	public void showTableStatus(Table t) {
 		System.out.println("Is this table open? : " + t.isOpenTable());
 		System.out.println("Is this table free? : " + t.isFreeTable());
@@ -166,10 +185,11 @@ public class PoolTableList implements List {
 	}
 
 	public void showAllTableStatuses() {
-		for( int i=1; i <= this.getTableAmount(); i++) {
+		for (int i = 1; i <= this.getTableAmount(); i++) {
 			this.showTableStatus(this.getTableList().get(i));
 		}
 	}
+
 	public void holdPlayerPosition(Player p, int position) {
 		// TODO Auto-generated method stub
 
@@ -209,8 +229,8 @@ public class PoolTableList implements List {
 		ptl.addTable(table1);
 		ptl.addTable(table2);
 		ptl.addTable(table3);
-//		ptl.addTable(table4);
-//		ptl.addTable(table5);
+		// ptl.addTable(table4);
+		// ptl.addTable(table5);
 
 		System.out.println("Amount of tables: " + ptl.getTableList().size());
 		System.out.println("Amount of player: " + ptl.getPlayerList().size());
