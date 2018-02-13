@@ -25,6 +25,7 @@ public class PoolTableList implements List {
 		this.currentPosition = 0;
 		this.setTableAmount(0);
 		this.unavailableTableCount = 0;
+		this.unavailableTables = new HashMap<Integer, Table>();
 	}
 
 	public PoolTableList() {
@@ -112,6 +113,7 @@ public class PoolTableList implements List {
 		Table selectedTable = this.tableList.get(tableNumber);
 		if (selectedTable.isFreeTable() || selectedTable.isOpenTable()) {
 			selectedTable.addToTable(p, tableNumber);
+			this.updateUnAvailableTableList();
 		} else {
 			System.out.println("No available spots at table " + tableNumber + " for " + p.getFullName());
 		}
@@ -160,7 +162,7 @@ public class PoolTableList implements List {
 	}
 
 	public void updateUnAvailableTableList() {
-		for(int i=1; i < this.getTableAmount(); i++) {
+		for(int i=1; i <= this.getTableAmount(); i++) {
 			Table tableChecking = this.getTableList().get(i);
 			if(!tableChecking.isOpenTable()) {
 				this.getUnavailableTables().put(i, tableChecking);
@@ -204,6 +206,8 @@ public class PoolTableList implements List {
 		Player p4 = new Player("Jeff", "Fredicks", "8-ball", UUID.randomUUID().toString());
 		Player p5 = new Player("Jim", "Jones", "8-ball", UUID.randomUUID().toString());
 		Player p6 = new Player("Jillian", "Doh", "8-ball", UUID.randomUUID().toString());
+		Player p7 = new Player("Bob", "Burger", "8-ball", UUID.randomUUID().toString());
+		Player p8 = new Player("Tina", "Bletcher", "8-ball", UUID.randomUUID().toString());
 		Table table1 = new Table();
 		Table table2 = new Table();
 		Table table3 = new Table();
@@ -224,13 +228,15 @@ public class PoolTableList implements List {
 		ptl.addPlayerToList(p3);
 		ptl.addPlayerToList(p5);
 		ptl.addPlayerToList(p6);
+		ptl.addPlayerToList(p7);
+		ptl.addPlayerToList(p8);
 
 		// adding layers
 		ptl.addTable(table1);
 		ptl.addTable(table2);
 		ptl.addTable(table3);
-		// ptl.addTable(table4);
-		// ptl.addTable(table5);
+		 ptl.addTable(table4);
+//		 ptl.addTable(table5);
 
 		System.out.println("Amount of tables: " + ptl.getTableList().size());
 		System.out.println("Amount of player: " + ptl.getPlayerList().size());
@@ -243,7 +249,7 @@ public class PoolTableList implements List {
 		ptl.viewPlayerList();
 		ptl.sendMaxPlayersToTable();
 		ptl.viewPlayerList();
-		System.out.println();
+		System.out.println("Tables Available: " + ptl.getAvailableTableCount());
 		ptl.showAllTableStatuses();
 	}
 
