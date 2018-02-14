@@ -112,7 +112,8 @@ public class PoolTableList implements List {
 			selectedTable.addToTable(p, tableNumber);
 			this.updateUnAvailableTableList();
 		} else {
-		//	System.out.println("No available spots at table " + tableNumber + " for " + p.getFullName());
+			// System.out.println("No available spots at table " + tableNumber + " for " +
+			// p.getFullName());
 		}
 
 	}
@@ -159,8 +160,7 @@ public class PoolTableList implements List {
 			playerListSize = this.playerList.size();
 			System.out.println("After list purge, there's "
 					+ (playerListSize == 0 ? "no one" : playerListSize + " people") + " left on the list");
-		}
-		else {
+		} else {
 			System.out.println("No tables available");
 		}
 	}
@@ -205,14 +205,14 @@ public class PoolTableList implements List {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		Player p1 = new Player("Cordell", "Kennerly", "8-ball", UUID.randomUUID().toString());
-		Player p2 = new Player("Jon", "Smith", "8-ball", UUID.randomUUID().toString());
-		Player p3 = new Player("Al", "Jones", "8-ball", UUID.randomUUID().toString());
-		Player p4 = new Player("Jeff", "Fredicks", "8-ball", UUID.randomUUID().toString());
-		Player p5 = new Player("Jim", "Jones", "8-ball", UUID.randomUUID().toString());
-		Player p6 = new Player("Jillian", "Doh", "8-ball", UUID.randomUUID().toString());
-		Player p7 = new Player("Bob", "Burger", "8-ball", UUID.randomUUID().toString());
-		Player p8 = new Player("Tina", "Bletcher", "8-ball", UUID.randomUUID().toString());
+		Player p1 = new Player("Cordell", "Kennerly", 5);
+		Player p2 = new Player("Jon", "Smith", 4);
+		Player p3 = new Player("Al", "Jones", 6);
+		Player p4 = new Player("Jeff", "Fredicks", 2);
+		Player p5 = new Player("Jim", "Jones", 4);
+		Player p6 = new Player("Jillian", "Doh", 6);
+		Player p7 = new Player("Bob", "Burger", 2);
+		Player p8 = new Player("Tina", "Bletcher", 2);
 		Table table1 = new Table();
 		Table table2 = new Table();
 		Table table3 = new Table();
@@ -242,9 +242,6 @@ public class PoolTableList implements List {
 		ptl.addTable(table3);
 		// ptl.addTable(table4);
 		// ptl.addTable(table5);
-
-		System.out.println("Amount of tables: " + ptl.getTableList().size());
-		System.out.println("Amount of player: " + ptl.getPlayerList().size());
 
 		System.out.println();
 		ptl.viewPlayerList();

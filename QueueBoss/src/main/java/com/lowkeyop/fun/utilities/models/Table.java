@@ -1,7 +1,5 @@
 package com.lowkeyop.fun.utilities.models;
 
-import java.util.UUID;
-
 public class Table {
 
 	private String format;
@@ -66,6 +64,14 @@ public class Table {
 		this.player2 = player2;
 	}
 
+	public Player getWinner() {
+		return winner;
+	}
+
+	public void setWinner(Player winner) {
+		this.winner = winner;
+	}
+
 	public boolean isPlayer1SpotAvailable() {
 		return isPlayer1SpotAvailable;
 	}
@@ -82,6 +88,14 @@ public class Table {
 		this.isPlayer2SpotAvailable = isPlayer2SpotAvailable;
 	}
 
+	public boolean isMatchComplete() {
+		return isMatchComplete;
+	}
+
+	public void setMatchComplete(boolean isMatchComplete) {
+		this.isMatchComplete = isMatchComplete;
+	}
+
 	public boolean isOpenTable() {
 		return this.isPlayer1SpotAvailable || this.isPlayer2SpotAvailable;
 	}
@@ -92,9 +106,9 @@ public class Table {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Player p1 = new Player("Cordell", "Kennerly", "8-ball", UUID.randomUUID().toString());
-		Player p2 = new Player("Jon", "Smith", "8-ball", UUID.randomUUID().toString());
-		Player p3 = new Player("Al", "Jones", "8-ball", UUID.randomUUID().toString());
+		Player p1 = new Player("Cordell", "Kennerly",4);
+		Player p2 = new Player("Jon", "Smith", 4);
+		Player p3 = new Player("Al", "Jones",4);
 		Table table1 = new Table();
 		table1.addToTable(p1, 1);
 		table1.addToTable(p2, 1);

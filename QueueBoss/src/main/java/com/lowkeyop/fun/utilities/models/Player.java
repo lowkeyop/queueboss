@@ -6,23 +6,23 @@ public class Player implements Person {
 
 	String firstName;
 	String lastName;
-	String preferedFormat;
+	int skillLevel;
 	String id;
 	
 	public Player() {
 		// TODO Auto-generated constructor stub
 		this.firstName = "";
 		this.lastName = "";
-		this.preferedFormat = "";
+		this.skillLevel = 0;
 		this.id = UUID.randomUUID().toString();
 	}
 
-	public Player(String firstName, String lastName, String preferedFormat, String id) {
+	public Player(String firstName, String lastName, int skillLevel) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.preferedFormat = preferedFormat;
-		this.id = id;
+		this.skillLevel=skillLevel;
+		this.id = UUID.randomUUID().toString();
 	}
 
 	public String getFirstName() {
@@ -41,12 +41,14 @@ public class Player implements Person {
 		this.lastName = lastName;
 	}
 
-	public String getPreferedFormat() {
-		return preferedFormat;
+	
+
+	public int getSkillLevel() {
+		return skillLevel;
 	}
 
-	public void setPreferedFormat(String preferedFormat) {
-		this.preferedFormat = preferedFormat;
+	public void setSkillLevel(int skillLevel) {
+		this.skillLevel = skillLevel;
 	}
 
 	public String getId() {
@@ -68,8 +70,7 @@ public class Player implements Person {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Player test1 = new Player();
-		String uid = UUID.randomUUID().toString();
-		Player values = new Player("Cordell", "Kennerly", "8-ball", uid );
+		Player values = new Player("Cordell", "Kennerly", 3);
 		System.out.println("The default Player" + test1.getId());
 		System.out.println("The constructed one: " + values.getId());
 	}
