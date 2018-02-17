@@ -2,7 +2,7 @@ package com.lowkeyop.fun.utilities.pool.leagues;
 
 import java.util.ArrayList;
 
-import com.lowkeyop.fun.utilities.models.Player;
+import com.lowkeyop.fun.utilities.pool.models.Player;
 
 abstract class PlayerMatch implements Match {
 	private int totalInnings, totalP1TOTaken, totalP2TOTaken, totalP1DefShots, totalP2DefShots, totalP1Wins,

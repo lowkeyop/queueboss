@@ -1,6 +1,6 @@
 package com.lowkeyop.fun.utilities.pool.leagues;
 
-import com.lowkeyop.fun.utilities.models.Player;
+import com.lowkeyop.fun.utilities.pool.models.Player;
 
 public class NineBallGame extends GameModel {
 	private boolean nineSnap;

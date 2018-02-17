@@ -1,6 +1,6 @@
 package com.lowkeyop.fun.utilities.pool.leagues;
 
-import com.lowkeyop.fun.utilities.models.Player;
+import com.lowkeyop.fun.utilities.pool.models.Player;
 
 abstract class GameModel {
 	private int innings, p1TO, p2TO, defShotP1, defShotP2;

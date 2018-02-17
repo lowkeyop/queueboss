@@ -5,12 +5,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import com.lowkeyop.fun.utilities.pool.models.List;
+import com.lowkeyop.fun.utilities.pool.models.Player;
+import com.lowkeyop.fun.utilities.pool.models.Table;
+
 import java.util.Set;
 import java.util.UUID;
-
-import com.lowkeyop.fun.utilities.models.List;
-import com.lowkeyop.fun.utilities.models.Player;
-import com.lowkeyop.fun.utilities.models.Table;
 
 public class PoolTableList implements List {
 

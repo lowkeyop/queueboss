@@ -1,4 +1,4 @@
-package com.lowkeyop.fun.utilities.models;
+package com.lowkeyop.fun.utilities.pool.models;
 
 public interface List {
 	void addPlayerToList(Player p);
