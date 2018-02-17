@@ -89,6 +89,12 @@ public class NineBallPlayerMatch extends PlayerMatch {
 		this.matchWinner = matchWinner;
 	}
 
+	public boolean isPlayerWinner(Player p) {
+		int pGoal = (p.getFirstName().equals(this.getPlayer1().getFirstName()) ? this.getP1Goal() : this.getP2Goal());
+		int pBalls = countTotalMadeBalls(p);
+		return pBalls >= pGoal;
+	}
+
 	public int countTotalDeadBall() {
 		int numberOfGames = this.getGames().size();
 		int dBallTotal = 0;
@@ -346,9 +352,90 @@ public class NineBallPlayerMatch extends PlayerMatch {
 		return loserPoints;
 	}
 
+	public void totalUpEverything() {
+		Player p1 = this.getPlayer1();
+		Player p2 = this.getPlayer2();
+
+		boolean isP1Win = isPlayerWinner(p1);
+		boolean isP2Win = isPlayerWinner(p2);
+
+		// set the winner
+		if (isP1Win || isP2Win) {
+			System.out.println("The Match is over!");
+			if (isP1Win) {
+				this.setMatchWinner(p1);
+			} else {
+				this.setMatchWinner(p2);
+			}
+
+			// match points earned
+			int p1Points = (isP1Win ? 20 - calculateLosersPoints(p2) : calculateLosersPoints(p1));
+			int p2Points = (isP1Win ? 20 - calculateLosersPoints(p1) : calculateLosersPoints(p2));
+			this.setP1MatchPointsEarned(p1Points);
+			this.setP2MatchPointsEarned(p2Points);
+
+			// number of 9 on Snaps
+			int p1NineSnaps = this.getP1NineSnapTotals();
+			int p2NineSnaps = this.getP2NineSnapTotals();
+			this.setP1NineSnapTotals(p1NineSnaps);
+			this.setP2NineSnapTotals(p2NineSnaps);
+
+			// number of break and runs
+			int p1bNR = this.getP1BreakNRuns();
+			int p2bNR = this.getP2BreakNRuns();
+			this.setP1BreakNRuns(p1bNR);
+			this.setP2BreakNRuns(p2bNR);
+
+			// number of defensive shots
+			int p1DefShots = this.getTotalP1DefShots();
+			int p2DefShots = this.getTotalP2DefShots();
+			this.setTotalP1DefShots(p1DefShots);
+			this.setTotalP2DefShots(p2DefShots);
+
+			// number of innings
+			int inningsTotal = this.calculateTotalInnings();
+			this.setTotalInnings(inningsTotal);
+
+		}
+	}
+
+	public boolean isMatchOver() {
+		int p1Goal = this.getP1Goal();
+		int p2Goal = this.getP2Goal();
+		Player p1 = this.getPlayer1();
+		Player p2 = this.getPlayer2();
+
+		int p1Balls = countTotalMadeBalls(p1);
+		int p2Balls = countTotalMadeBalls(p2);
+
+		boolean isP1Win = p1Goal == p1Balls;
+		boolean isP2Win = p2Balls == p2Goal;
+		boolean isWinnerDetermined = isP1Win || isP2Win;
+		if (isWinnerDetermined) {
+			System.out.println("The Match is over!");
+			if (isP1Win) {
+				this.setMatchWinner(p1);
+			} else {
+				this.setMatchWinner(p2);
+			}
+			this.totalUpEverything();
+		}
+		return isWinnerDetermined;
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		Player p1 = new Player("Cordell", "Kennerly", 6);
+		Player p2 = new Player("Nick","Slate", 6);
+		NineBallPlayerMatch match1 = new NineBallPlayerMatch();
+		match1.setPlayer1(p1);
+		match1.setPlayer2(p2);
+		
+		match1.printPrematchStats();
+		
+		match1.addNewGame();
+		System.out.println("Number of Games Played: " + match1.getGames().size());
+		System.out.println("Game class type " + match1.getGames().get(0).getClass());
 	}
 
 }

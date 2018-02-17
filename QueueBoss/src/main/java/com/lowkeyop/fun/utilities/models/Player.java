@@ -2,27 +2,29 @@ package com.lowkeyop.fun.utilities.models;
 
 import java.util.UUID;
 
-public class Player implements Person {
-
-	String firstName;
-	String lastName;
-	int skillLevel;
-	String id;
-	
-	public Player() {
-		// TODO Auto-generated constructor stub
-		this.firstName = "";
-		this.lastName = "";
-		this.skillLevel = 0;
-		this.id = UUID.randomUUID().toString();
-	}
+public class Player {
+	private String firstName, lastName, uid;
+	private int skillLevel, timeouts;
 
 	public Player(String firstName, String lastName, int skillLevel) {
 		super();
+		this.setUid(UUID.randomUUID().toString());
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.skillLevel=skillLevel;
-		this.id = UUID.randomUUID().toString();
+		this.skillLevel = skillLevel;
+		if(this.skillLevel <4) {
+			this.setTimeouts(2);
+		} else
+			this.setTimeouts(1);
+	}
+
+	public Player() {
+		super();
+		this.firstName = "";
+		this.lastName = "";
+		this.skillLevel = 4;
+		this.setTimeouts(1);
+		// TODO Auto-generated constructor stub
 	}
 
 	public String getFirstName() {
@@ -41,7 +43,13 @@ public class Player implements Person {
 		this.lastName = lastName;
 	}
 
-	
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
 
 	public int getSkillLevel() {
 		return skillLevel;
@@ -51,30 +59,16 @@ public class Player implements Person {
 		this.skillLevel = skillLevel;
 	}
 
-	public String getId() {
-		return id;
+	public int getTimeouts() {
+		return timeouts;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setTimeouts(int timeouts) {
+		this.timeouts = timeouts;
 	}
 
-	public void displayFullInfo() {
-		// TODO Auto-generated method stub
-		System.out.println(this.firstName + " " + this.lastName);
-	}
-	
 	public String getFullName() {
-		return this.firstName + " " + this.lastName;
-	}
-	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Player test1 = new Player();
-		Player values = new Player("Cordell", "Kennerly", 3);
-		System.out.println("The default Player" + test1.getId());
-		System.out.println("The constructed one: " + values.getId());
+		return firstName + " " + lastName;
 	}
-	
-
-	
 }

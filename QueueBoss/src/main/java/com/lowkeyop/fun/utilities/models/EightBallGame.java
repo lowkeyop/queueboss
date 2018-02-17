@@ -39,7 +39,7 @@ public class EightBallGame extends GameModel {
 		System.out.println(dConstruct.getDefShotP1());
 
 		Player winningPlayer = null;
-		Player player1 = new Player("Player 1", "Team 1", 6);
+		Player player1 = new Player("Player 1", "Team 1", 5);
 		Player player2 = new Player("Player 2", "Team 2", 5);
 		boolean eOB = false;
 		boolean bNR = true;

@@ -7,6 +7,7 @@ abstract class PlayerMatch implements Match {
 			totalP2Wins, p1Goal, p2Goal, p1BreakNRuns, p2BreakNRuns;
 	private ArrayList<GameModel> games;
 	private Player player1, player2;
+	boolean isForfeit;
 
 	public PlayerMatch() {
 		super();
@@ -19,11 +20,12 @@ abstract class PlayerMatch implements Match {
 		this.totalP2Wins = 0;
 		this.p1Goal = 0;
 		this.p2Goal = 0;
-		this.games = null;
+		this.games = new ArrayList<GameModel>();
 		this.player1 = null;
 		this.player2 = null;
 		this.p1BreakNRuns = 0;
 		this.p2BreakNRuns = 0;
+		this.isForfeit = false;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -45,6 +47,7 @@ abstract class PlayerMatch implements Match {
 		this.games = games;
 		this.player1 = player1;
 		this.player2 = player2;
+		this.isForfeit = false;
 	}
 
 	public int getTotalInnings() {
@@ -159,6 +162,14 @@ abstract class PlayerMatch implements Match {
 		this.player2 = player2;
 	}
 
+	public boolean isForfeit() {
+		return isForfeit;
+	}
+
+	public void setForfeit(boolean isForfeit) {
+		this.isForfeit = isForfeit;
+	}
+
 	public int calculatePointsEarned(Player p) {
 		return -1;
 	}
@@ -222,20 +233,18 @@ abstract class PlayerMatch implements Match {
 		int tSkillLevel = targetPlayer.getSkillLevel();
 		int oSkillLevel = opp.getSkillLevel();
 		int winGoal = 0;
-		if (this.getClass().isInstance(EightBallPlayerMatch.class)) {
-			if (tSkillLevel == 2) {
-				winGoal = 2;
-			}
-			if (tSkillLevel > 2 && (oSkillLevel >= tSkillLevel)) {
+		if (this.getClass().equals(EightBallPlayerMatch.class)) {
+			System.out.println("Calculating 8-ball goals");
+			if (tSkillLevel == 2 || oSkillLevel == 2) {
+				winGoal = tSkillLevel;
+			} else if (tSkillLevel > 2) {
 				winGoal = tSkillLevel - 1;
-			}
-			if (tSkillLevel == 7 && (oSkillLevel < 3)) {
+			} else if (tSkillLevel == 7 && (oSkillLevel > 3)) {
 				winGoal = tSkillLevel - 2;
-			}
-			if (tSkillLevel == 7 && oSkillLevel == 2) {
+			} else if (tSkillLevel == 7 && oSkillLevel == 2) {
 				winGoal = tSkillLevel;
 			}
-		} else if (this.getClass().isInstance(NineBallPlayerMatch.class)) {
+		} else if (this.getClass().equals(NineBallPlayerMatch.class)) {
 			switch (tSkillLevel) {
 			case 1:
 				winGoal = 14;
@@ -273,12 +282,55 @@ abstract class PlayerMatch implements Match {
 		return winGoal;
 	}
 
-	public void addNewGame(String format) {
+	public void printPrematchStats() {
+		Player player1 = this.getPlayer1();
+		Player player2 = this.getPlayer2();
+		int p1Goal = this.calculateGoal(player1, player2);
+		int p2Goal = this.calculateGoal(player2, player1);
+		System.out.println("Player1 Goal: " + p1Goal + " \nPlayer2 Goal: " + p2Goal);
+		this.setP1Goal(p1Goal);
+		this.setP2Goal(p2Goal);
+
+		System.out.println("Player 1: " + player1.getFullName());
+		System.out.println("Player 2: " + player2.getFullName());
+
+		System.out.println(player1.getFullName() + "- Skill Level:" + player1.getSkillLevel());
+		System.out.println(player2.getFullName() + "- Skill Level:" + player2.getSkillLevel());
+
+		System.out.println(player1.getFullName() + "- Goal:" + this.getP1Goal());
+		System.out.println(player2.getFullName() + "- Goal:" + this.getP2Goal());
+
+		System.out.println(player1.getFullName() + " - Timeouts per Game: " + player1.getTimeouts());
+		System.out.println(player2.getFullName() + " - Tiemouts per Game: " + player2.getTimeouts());
+	}
+
+	public void removeLastGame() {
+		// TODO Auto-generated method stub
+		int gameCount = this.getGames().size();
+		if (gameCount > 0) {
+			this.getGames().remove(gameCount - 1);
+		}
+	}
+
+	public void addInning(GameModel g) {
+		// TODO Auto-generated method stub
+		int inningsCount = g.getInnings();
+		g.setInnings(inningsCount++);
+	}
+
+	public void subtractInning(GameModel g) {
+		// TODO Auto-generated method stub
+		int inningsCount = g.getInnings();
+		g.setInnings(inningsCount--);
+	}
+
+	public void addNewGame() {
 		GameModel newGame;
-		boolean isEightBallGame = this.getClass().isInstance(EightBallPlayerMatch.class);
+		boolean isEightBallGame = this.getClass().equals(EightBallPlayerMatch.class);
 		if (isEightBallGame) {
 			newGame = new EightBallGame();
 		} else {
+			System.out.println("It's a 9 ball game");
 			newGame = new NineBallGame();
 		}
 		newGame.setPlayer1(this.getPlayer1());
@@ -286,4 +338,31 @@ abstract class PlayerMatch implements Match {
 		this.games.add(newGame);
 	}
 
+	public void grantForfeitGameWin(Player p, int numberOfForfeits) {
+		this.setForfeit(true);
+		for (int i = 0; i < numberOfForfeits; i++) {
+			addNewGame();
+		}
+		int gameTotal = this.getGames().size();
+		for (int i = gameTotal-numberOfForfeits; i < gameTotal; i++) {
+			int currentIndex = gameTotal - i;
+			GameModel forfeitGame = this.getGames().get(currentIndex);
+			forfeitGame.setWinner(p);
+			forfeitGame.setInnings(0);
+			boolean isEightBallGame = this.getClass().equals(EightBallPlayerMatch.class);
+			if (isEightBallGame) {
+				
+			} else {
+				NineBallGame givenNineBallGame = (NineBallGame) forfeitGame;
+				if (p.getUid() == this.getPlayer1().getUid()) {
+					givenNineBallGame.setP1Balls(10);
+				} else {
+					givenNineBallGame.setP2Balls(10);
+				}
+				this.getGames().set(currentIndex, givenNineBallGame);
+			}
+		}
+	}
+
+	
 }

@@ -89,7 +89,7 @@ public class PoolTableList implements List {
 		for (Iterator<Player> iterator = players.iterator(); iterator.hasNext();) {
 			tempIndex++;
 			Player player = (Player) iterator.next();
-			if (player.getId() == p.getId()) {
+			if (player.getUid() == p.getUid()) {
 				System.out.println(p.getFullName() + " is already on the list. " + p.getFullName()
 						+ " currently at position: " + tempIndex);
 				playerExistsCheck = true;

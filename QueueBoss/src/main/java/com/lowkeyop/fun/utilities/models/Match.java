@@ -7,7 +7,14 @@ public interface Match {
 	int calculateTotalTimeOutsUsed(Player p);
 	int calculateTotalInnings();
 	int calculateGoal(Player targetPlayer, Player opp);
-	void addNewGame(String format);
-	
+	boolean isMatchOver();
+	void addNewGame();
+	void removeLastGame();
+	void totalUpEverything();
+	void addInning(GameModel g);
+	void subtractInning(GameModel g);
+	void printPrematchStats();
+	void grantForfeitGameWin(Player winRecipient, int gamesToForfeit);
+//	void forfeitAllGames(Player winsRecipient);
 	
 }
