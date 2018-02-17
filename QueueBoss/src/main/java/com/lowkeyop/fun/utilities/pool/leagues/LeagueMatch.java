@@ -1,4 +1,4 @@
-package com.lowkeyop.fun.utilities.models;
+package com.lowkeyop.fun.utilities.pool.leagues;
 
 import java.time.LocalTime;
 

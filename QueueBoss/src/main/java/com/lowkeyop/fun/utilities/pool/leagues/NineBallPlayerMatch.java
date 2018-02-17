@@ -1,4 +1,6 @@
-package com.lowkeyop.fun.utilities.models;
+package com.lowkeyop.fun.utilities.pool.leagues;
+
+import com.lowkeyop.fun.utilities.models.Player;
 
 public class NineBallPlayerMatch extends PlayerMatch {
 	private int p1NineSnapTotals, p2NineSnapTotals, totalDeadBalls, p1MatchPointsEarned, p2MatchPointsEarned;
@@ -426,7 +428,7 @@ public class NineBallPlayerMatch extends PlayerMatch {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Player p1 = new Player("Cordell", "Kennerly", 6);
-		Player p2 = new Player("Nick","Slate", 6);
+		Player p2 = new Player("Nick","Slate", 10);
 		NineBallPlayerMatch match1 = new NineBallPlayerMatch();
 		match1.setPlayer1(p1);
 		match1.setPlayer2(p2);

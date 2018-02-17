@@ -1,7 +1,9 @@
-package com.lowkeyop.fun.utilities.models;
+package com.lowkeyop.fun.utilities.pool.leagues;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import com.lowkeyop.fun.utilities.models.Player;
 
 public class ApaTeam implements Team {
 	private ArrayList<Player> team;

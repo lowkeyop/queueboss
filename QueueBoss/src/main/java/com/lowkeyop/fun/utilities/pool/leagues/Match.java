@@ -1,4 +1,6 @@
-package com.lowkeyop.fun.utilities.models;
+package com.lowkeyop.fun.utilities.pool.leagues;
+
+import com.lowkeyop.fun.utilities.models.Player;
 
 public interface Match {
 	int calculatePointsEarned(Player p);

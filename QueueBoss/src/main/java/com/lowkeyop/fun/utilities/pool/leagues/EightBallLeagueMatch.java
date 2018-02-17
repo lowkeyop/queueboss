@@ -1,4 +1,4 @@
-package com.lowkeyop.fun.utilities.models;
+package com.lowkeyop.fun.utilities.pool.leagues;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -17,11 +17,11 @@ public class EightBallLeagueMatch implements LeagueMatch {
 		// TODO Auto-generated constructor stub
 		this.homeTeam = null;
 		this.awayTeam = null;
-		this.matches = new EightBallLeagueMatch[5];
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.homeTeamPoints = homeTeamPoints;
-		this.awayTeamPoints = awayTeamPoints;
+		this.matches = new EightBallLeagueMatch[TOTAL_LEAGUE_MATCHES];
+		this.startTime = null;
+		this.endTime = null;
+		this.homeTeamPoints = 0;
+		this.awayTeamPoints = 0;
 	}
 
 	public EightBallLeagueMatch(ApaTeam homeTeam, ApaTeam awayTeam, EightBallLeagueMatch[] matches, LocalTime startTime,

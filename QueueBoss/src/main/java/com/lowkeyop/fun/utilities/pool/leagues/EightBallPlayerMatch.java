@@ -1,4 +1,6 @@
-package com.lowkeyop.fun.utilities.models;
+package com.lowkeyop.fun.utilities.pool.leagues;
+
+import com.lowkeyop.fun.utilities.models.Player;
 
 public class EightBallPlayerMatch extends PlayerMatch {
 	private int p1EightOnBreakTotal, p2EightOnBreakTotal, p1MatchPointsEarned, p2MatchPointsEarned;

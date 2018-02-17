@@ -1,6 +1,8 @@
-package com.lowkeyop.fun.utilities.models;
+package com.lowkeyop.fun.utilities.pool.leagues;
 
 import java.util.ArrayList;
+
+import com.lowkeyop.fun.utilities.models.Player;
 
 abstract class PlayerMatch implements Match {
 	private int totalInnings, totalP1TOTaken, totalP2TOTaken, totalP1DefShots, totalP2DefShots, totalP1Wins,
@@ -287,7 +289,7 @@ abstract class PlayerMatch implements Match {
 		Player player2 = this.getPlayer2();
 		int p1Goal = this.calculateGoal(player1, player2);
 		int p2Goal = this.calculateGoal(player2, player1);
-		System.out.println("Player1 Goal: " + p1Goal + " \nPlayer2 Goal: " + p2Goal);
+		System.out.println("Player1 Goal: " + p1Goal + "\nPlayer2 Goal: " + p2Goal);
 		this.setP1Goal(p1Goal);
 		this.setP2Goal(p2Goal);
 
@@ -311,6 +313,7 @@ abstract class PlayerMatch implements Match {
 			this.getGames().remove(gameCount - 1);
 		}
 	}
+
 
 	public void addInning(GameModel g) {
 		// TODO Auto-generated method stub
@@ -344,14 +347,14 @@ abstract class PlayerMatch implements Match {
 			addNewGame();
 		}
 		int gameTotal = this.getGames().size();
-		for (int i = gameTotal-numberOfForfeits; i < gameTotal; i++) {
+		for (int i = gameTotal - numberOfForfeits; i < gameTotal; i++) {
 			int currentIndex = gameTotal - i;
 			GameModel forfeitGame = this.getGames().get(currentIndex);
 			forfeitGame.setWinner(p);
 			forfeitGame.setInnings(0);
 			boolean isEightBallGame = this.getClass().equals(EightBallPlayerMatch.class);
 			if (isEightBallGame) {
-				
+
 			} else {
 				NineBallGame givenNineBallGame = (NineBallGame) forfeitGame;
 				if (p.getUid() == this.getPlayer1().getUid()) {
@@ -364,5 +367,4 @@ abstract class PlayerMatch implements Match {
 		}
 	}
 
-	
 }
