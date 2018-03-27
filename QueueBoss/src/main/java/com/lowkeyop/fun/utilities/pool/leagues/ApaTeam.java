@@ -64,7 +64,6 @@ public class ApaTeam implements Team {
 		this.locationAddress = locationAddress;
 	}
 
-	
 	public boolean isSkillLevelLimitReached(int limit) {
 		// TODO Auto-generated method stub
 		int sumSkillLevel = 0;
@@ -74,7 +73,6 @@ public class ApaTeam implements Team {
 		return sumSkillLevel >= APA_MAX_SUM_SKILL_LEVEL;
 	}
 
-	
 	public void addPlayerToTeam(Player p) {
 		// TODO Auto-generated method stub
 		if (!isAlreadyOnTeam(p) && !isMaxTeamSizeReached()) {
@@ -98,7 +96,6 @@ public class ApaTeam implements Team {
 		return isOnTeam;
 	}
 
-	
 	public void simulatePotentialTeamComps() {
 		ArrayList<Player> simList = new ArrayList<Player>();
 		ArrayList<ArrayList<Player>> combinationLists = new ArrayList<ArrayList<Player>>();
@@ -162,23 +159,45 @@ public class ApaTeam implements Team {
 				if (wasPlayerFound) {
 					containsSamePlayersCount++;
 				}
+				else 
+					System.out.println("Player " + player.getFullName() +  " was not found in list: " + listToCheck.toString());
 			}
 			isduplicateList = containsSamePlayersCount == listToCheck.size();
 		}
 		return isduplicateList;
 	}
 
+	public int sumSkillLevelToPlay() {
+		// TODO Auto-generated method stub
+		int currentSkillCount = 0;
+		for (Player player : alreadyPlayedMembers) {
+			currentSkillCount += player.getSkillLevel();
+		}
+		currentSkillCount = APA_MAX_SUM_SKILL_LEVEL - currentSkillCount;
+		return currentSkillCount;
+	}
+
+	public boolean isMaxTeamSizeReached() {
+		// TODO Auto-generated method stub
+		if (team.size() >= APA_MAX_TEAM_SIZE) {
+			System.out.println("Max team size reached");
+		} else {
+			System.out.println("You still have " + (APA_MAX_TEAM_SIZE - team.size()) + " slots left.");
+		}
+		return team.size() >= APA_MAX_TEAM_SIZE;
+	}
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ApaTeam test = new ApaTeam();
-		Player p1 = new Player("Doug", "Peterson", 5);
-		Player p2 = new Player("Cordell", "Kennerly", 4);
-		Player p3 = new Player("Tex", "Avery", 4);
-		Player p4 = new Player("Henry", "Nix", 2);
-		Player p5 = new Player("Alex", "Morris", 2);
-		Player p6 = new Player("Bill", "Jordan", 6);
-		Player p7 = new Player("Texas", "Walker Ranger", 5);
-		Player p8 = new Player("Wu-Tang", "Clan", 5);
+		Player p1 = new Player("Cordell", "Kennerly", 3);
+		Player p2 = new Player("David", "Banner", 4);
+		Player p3 = new Player("Tony", "Starks", 5);
+		Player p4 = new Player("T'Challa", "Udaku", 6);
+		Player p5 = new Player("Bruce", "Wayne", 7);
+		Player p6 = new Player("Hero", "Yui", 4);
+		Player p7 = new Player("Trowa", "Nemor", 3);
+		Player p8 = new Player("Ted", "Barillo", 4);
 		Player p9 = new Player("Extra", "Mann", 6);
 
 		test.addPlayerToTeam(p1);
@@ -194,27 +213,4 @@ public class ApaTeam implements Team {
 		test.simulatePotentialTeamComps();
 
 	}
-
-	
-	public int sumSkillLevelToPlay() {
-		// TODO Auto-generated method stub
-		int currentSkillCount = 0;
-		for (Player player : alreadyPlayedMembers) {
-			currentSkillCount += player.getSkillLevel();
-		}
-		currentSkillCount = APA_MAX_SUM_SKILL_LEVEL - currentSkillCount;
-		return currentSkillCount;
-	}
-
-	
-	public boolean isMaxTeamSizeReached() {
-		// TODO Auto-generated method stub
-		if (team.size() >= APA_MAX_TEAM_SIZE) {
-			System.out.println("Max team size reached");
-		} else {
-			System.out.println("You still have " + (APA_MAX_TEAM_SIZE - team.size()) + " slots left.");
-		}
-		return team.size() >= APA_MAX_TEAM_SIZE;
-	}
-
 }
